@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+@custom-variant dark (&:where(.dark, .dark *));
+
+body,
+html {
+  height: 100vh;
+}
+
+#app {
+  height: 100%;
+}
+
+@media (hover: hover) {
+}
+
+@media (min-width: 1024px) {
+}

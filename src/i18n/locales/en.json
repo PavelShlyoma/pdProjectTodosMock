@@ -1,0 +1,76 @@
+{
+  "auth": {
+    "password": {
+      "base": "Password",
+      "label": "Confirm Password",
+      "error": {
+        "message": "The password must have at least 1 uppercase letter, 1 number and 1 symbol, the password length must be at least 8 characters",
+        "retry": {
+          "message": "The passwords don't match"
+        }
+      }
+    },
+    "login": {
+      "base": "Login",
+      "placeholder": "Enter your Email",
+      "label": "Email",
+      "button": "Login",
+      "message": "Don’t have an account?",
+      "error": {
+        "message": "The email was entered incorrectly"
+      }
+    },
+    "register": {
+      "base": "Register",
+      "message": "Already have an account?",
+      "button": "Register"
+    }
+  },
+  "header": {
+    "router": {
+      "index": "Index",
+      "profile": "Profile"
+    }
+  },
+  "home": {
+    "empty": {
+      "message": {
+        "title": "What do you want to do today?",
+        "text": "Tap + to add your tasks"
+      }
+    },
+    "select": {
+      "all": "All",
+      "complete": "Only complete",
+      "unComplete": "Only un complete"
+    },
+    "add": {
+      "label": "Add task",
+      "reset": "Reset",
+      "submit": "Submit",
+      "placeholder": "Do math homework"
+    },
+    "edit": {
+      "label": {
+        "base": "Edit task",
+        "complete": "Complete",
+        "unComplete": "Un complete"
+      },
+      "button": {
+        "reset": "Reset",
+        "delete": "Delete task",
+        "submit": "Submit"
+      },
+      "placeholder": "Do math homework"
+    }
+  },
+  "profile": {
+    "email": "Email:",
+    "role": {
+      "title": "Role:",
+      "user": "User",
+      "admin": "Admin"
+    },
+    "button": "Logout"
+  }
+}
