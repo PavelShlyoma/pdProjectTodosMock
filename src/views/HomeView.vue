@@ -1,5 +1,6 @@
 <script>
 import { useTodosStore } from "@/stores/todos.js";
+import { useTodosMockStore} from "@/stores/mockTodos.js";
 import todoList from "@/components/todoList.vue";
 import { useAuthStore } from "@/stores/auth.js";
 import addTodoBarComp from "@/components/addTodoBar.vue";
@@ -20,8 +21,9 @@ export default {
 
     const todosStore = useTodosStore();
     const authStore = useAuthStore();
+    const todosMockStore = useTodosMockStore();
 
-    return { todosStore, authStore, isDark, toggleDark, route, };
+    return { todosStore, authStore, isDark, toggleDark, route, todosMockStore };
   },
   data() {
     return {
@@ -46,6 +48,8 @@ export default {
     },
   },
   mounted() {
+    this.todosMockStore.total = this.todosMockStore.getAllTotal(100, 200)
+    this.todosMockStore.todos = this.todosMockStore.getAllTodos();
     const page = this.route.query.page;
     if (page) {
       this.todosStore.params.page = page;
@@ -68,7 +72,7 @@ export default {
       </button>
       <div class="p-8">
         <div
-          v-if="todosStore.todos === null"
+          v-if="todosStore.todos.length === 0"
           class="flex items-center justify-center flex-col h-full gap-5 max-w-7xl mx-auto"
         >
           <img
