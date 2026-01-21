@@ -35,7 +35,12 @@ export default {
   watch: {
     'todosStore.params': {
       handler() {
-        this.todosStore.getTodos();
+        this.todosStore.getTodos().then(() => {
+          if (this.todosStore.todos.length === 0 && this.todosStore.params.complete !== "all") {
+            this.todosStore.params.complete = "all";
+            this.selectCompleted = "all";
+          }
+        });
         this.$router.push({ query: this.todosStore.params });
       },
       deep: true,

@@ -16,7 +16,7 @@ export const useTodosMockStore = defineStore("mockTodos", {
         obj.id = i;
         obj.text = "Example text";
         obj.is_complete = Math.round(Math.random()) !== 0;
-        obj.created_at = '2000-00-00T00:00:00Z';
+        obj.created_at = new Date().toISOString().slice(0, 20);
         array.push(obj);
       }
       return array;
@@ -47,6 +47,7 @@ export const useTodosMockStore = defineStore("mockTodos", {
       const index = this.todos.findIndex((todo) => todo.id === +id);
       this.todos[index].is_complete = complete;
       this.todos[index].text = text;
+      this.todos[index].created_at = new Date().toISOString().slice(0, 20);
     },
     deleteTodoElement(id) {
       const index = this.todos.findIndex((todo) => todo.id === +id);
