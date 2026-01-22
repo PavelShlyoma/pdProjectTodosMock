@@ -109,5 +109,13 @@ export const handlers = [
     }, {
       status: 201,
     })
+  }),
+  http.post('https://todos:8080/logout', async ({request}) => {
+    document.cookie = "refresh_token="
+    return HttpResponse.json({
+      status: "success",
+    }, {
+      status: 200,
+    })
   })
 ];
