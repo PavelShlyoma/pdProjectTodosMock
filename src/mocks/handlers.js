@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { useTodosMockStore } from "../stores/mockTodos.js";
 
 export const handlers = [
-    http.post("https://todos:8080/login", async ({request, params, cookies}) => {
+    http.post("https://todos:8080/login", async ({request}) => {
       const data = await request.clone().json();
       if (data?.email === "admin@test.ru" && data?.password === "testTEST1!") {
         document.cookie = "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNSIsImVtYWlsIjoiYWRtaW5AdGVzdC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoyODA0MTc2MDIwLCJpYXQiOjE3Njg4MTYwMjB9.cOZjvyMsTCylmTg_iqzHa-74QTX7Rgq2zP5b_yPCo0o"
@@ -35,15 +35,20 @@ export const handlers = [
         })
       }
     }),
-    // Мок для GET /api/users
-    http.get('https://todos:8080/todos',   async ({request, params, cookies}) => {
+    http.get('https://todos:8080/todos',   async ({request}) => {
       const mockStore = useTodosMockStore();
       const url = new URL(request.url);
       const complete = url.searchParams.get("complete");
       const todosFilter = mockStore.getFilteredTodos(complete);
       const totalFilter = todosFilter.length;
       const page = url.searchParams.get("page");
-      const todosPage = mockStore.getPageTodos(page, todosFilter);
+      let todosPage = "";
+      console.log(page, totalFilter, Math.floor(totalFilter / 10));
+      if (Math.floor(totalFilter / 10) < page) {
+        todosPage = mockStore.getPageTodos(Math.floor(totalFilter / 10), todosFilter);
+      } else {
+        todosPage = mockStore.getPageTodos(page, todosFilter);
+      }
       return HttpResponse.json({
         status: "success",
         total: totalFilter,
@@ -52,7 +57,6 @@ export const handlers = [
         status: 200,
       })
     }),
-    // Мок для POST /api/posts
     http.post('https://todos:8080/todos', async ({request}) => {
       const data = await request.clone().json();
       if (data?.text) {
@@ -110,8 +114,15 @@ export const handlers = [
       status: 201,
     })
   }),
-  http.post('https://todos:8080/logout', async ({request}) => {
+  http.post('https://todos:8080/logout', async () => {
     document.cookie = "refresh_token="
+    return HttpResponse.json({
+      status: "success",
+    }, {
+      status: 200,
+    })
+  }),
+  http.post('https://todos:8080/register', async () => {
     return HttpResponse.json({
       status: "success",
     }, {
